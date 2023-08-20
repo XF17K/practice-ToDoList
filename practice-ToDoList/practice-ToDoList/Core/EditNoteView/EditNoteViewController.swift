@@ -1,18 +1,30 @@
 //
-//  AddNoteViewController.swift
+//  EditNoteViewController.swift
 //  practice-ToDoList
 //
-//  Created by Burhan AFŞAR on 5.08.2023.
+//  Created by Burhan AFŞAR on 20.08.2023.
 //
 
 import UIKit
 import SnapKit
 
-class AddNoteViewController: UIViewController {
-
-    //MARK: -VARIABLES
-    private lazy var viewModel = AddNoteViewModel(viewController: self)
+final class EditNoteViewController: UIViewController{
     
+    //MARK: -VARIABLES
+    private lazy var viewModel = EditNoteViewModel(viewController: self)
+    
+    let indexPath: IndexPath
+    let toDo: String
+    
+    init(indexPath: IndexPath, toDo: String) {
+        self.indexPath = indexPath
+        self.toDo = toDo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let vStackView: UIStackView = {
         let stackView = UIStackView()
@@ -36,20 +48,23 @@ class AddNoteViewController: UIViewController {
     
     private let confirmButton: UIButton = {
         let confirmButton = UIButton()
-        confirmButton.setTitle("OK", for: .normal)
+        confirmButton.setTitle("Save", for: .normal)
         confirmButton.backgroundColor = .systemBlue
         confirmButton.layer.cornerRadius = 8
         confirmButton.addTarget(self, action: #selector(tappedConfirm), for: .touchUpInside)
         return confirmButton
     }()
+    
     //MARK: -LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        self.title = "Add To-Do"
+        self.title = "Edit To-Do"
+        noteTextField.text = toDo
+        viewModel.viewDidLoad()
         style()
         layout()
-        // Do any additional setup after loading the view.
+        
     }
     
     private func style(){
@@ -80,7 +95,7 @@ class AddNoteViewController: UIViewController {
     private func tappedConfirm(){
         print("tapped confirm")
         if(noteTextField.text?.isEmpty == false){
-            viewModel.addNote(note: noteTextField.text!)
+            viewModel.editNote(indexPath: indexPath, note: noteTextField.text!)
         }
         else{
             return
@@ -89,14 +104,5 @@ class AddNoteViewController: UIViewController {
         
         //navigationController?.popViewController(animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

@@ -11,8 +11,6 @@ struct TestData{
     public static let list: [NoteModel] = [
     NoteModel(toDo: "Todo 1"),
     NoteModel(toDo: "Todo 2"),
-    NoteModel(toDo: "Todo 3"),
-    NoteModel(toDo: "Todo 4"),
-    NoteModel(toDo: "Todo 5")
+    NoteModel(toDo: "Todo 3")
     ]
 }

@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct NoteModel{
+struct NoteModel:Codable{
     let id: UUID
-    let toDo: String
-    let isDone: Bool
+    var toDo: String
+    var isDone: Bool
     let date: Date
     
     init(toDo:String) {

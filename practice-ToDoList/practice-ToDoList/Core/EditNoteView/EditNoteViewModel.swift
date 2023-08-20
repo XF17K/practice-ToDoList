@@ -1,17 +1,18 @@
 //
-//  AddNoteViewModel.swift
+//  EditNoteViewModel.swift
 //  practice-ToDoList
 //
-//  Created by Burhan AFŞAR on 5.08.2023.
+//  Created by Burhan AFŞAR on 20.08.2023.
 //
 
 import Foundation
 
-final class AddNoteViewModel{
-    let viewController: AddNoteViewController
+final class EditNoteViewModel{
+    
+    let viewController: EditNoteViewController
     let dbManager: DbManager = DbManager()
     
-    init(viewController: AddNoteViewController) {
+    init(viewController: EditNoteViewController) {
         self.viewController = viewController
     }
     
@@ -19,12 +20,12 @@ final class AddNoteViewModel{
         
     }
     
-    func addNote(note: String){
+    func editNote(indexPath: IndexPath, note: String){
         let i = viewController.navigationController?.viewControllers.firstIndex(of: viewController)
         let previousViewController: MainViewController = viewController.navigationController?.viewControllers[i!-1] as! MainViewController
         
-        let newNote: NoteModel = NoteModel(toDo: note)
-        previousViewController.list.append(newNote)
+        previousViewController.list[indexPath.row].toDo = note
+
         dbManager.userDefaultsService.saveList(list: previousViewController.list)
         previousViewController.tableView.reloadData()
         //optimizasyon yapılabilir
